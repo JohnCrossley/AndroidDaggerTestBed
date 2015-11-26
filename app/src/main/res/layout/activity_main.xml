@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This text is set via the DIModule.  It is different for test and production:"/>
+
+    <TextView
+        android:id="@+id/output"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View android:layout_width="match_parent" android:layout_height="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This object is in application scope and it's value will not change:"/>
+
+    <TextView
+        android:id="@+id/applicationScopedObject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View android:layout_width="match_parent" android:layout_height="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This object is in activity scope and it's value will change:"/>
+
+    <TextView
+        android:id="@+id/activityScopedObject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
