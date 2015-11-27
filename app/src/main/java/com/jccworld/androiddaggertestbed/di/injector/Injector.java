@@ -7,4 +7,5 @@ import android.app.Activity;
  */
 public interface Injector {
     void inject(final Activity activity);
+    //overloads for Services, Fragments, Views, etc
 }

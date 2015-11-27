@@ -19,7 +19,7 @@ public class ApplicationModule implements DIModule {
 
     private Application application;
 
-    public ApplicationModule(Application application) {
+    public ApplicationModule(final Application application) {
         this.application = application;
     }
 

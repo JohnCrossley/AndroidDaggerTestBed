@@ -18,8 +18,6 @@ public class ProductionInjector implements Injector {
                 .inject(activity);
     }
 
-    //overload for Services etc
-
     private static Application getApplication(final Activity activity) {
         if (activity.getApplication() instanceof Application) {
             return (Application) activity.getApplication();

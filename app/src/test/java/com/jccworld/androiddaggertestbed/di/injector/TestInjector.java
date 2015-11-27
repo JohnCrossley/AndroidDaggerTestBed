@@ -20,8 +20,9 @@ public class TestInjector implements Injector {
 
     @Override
     public void inject(final Activity activity) {
-        ObjectGraph.create(modules).inject(activity);
-    }
+        ObjectGraph objectGraph = ObjectGraph.create(modules);
 
-    //overload for Services etc
+        objectGraph.validate();
+        objectGraph.inject(activity);
+    }
 }

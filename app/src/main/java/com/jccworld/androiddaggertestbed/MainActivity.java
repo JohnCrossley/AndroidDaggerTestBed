@@ -2,6 +2,7 @@ package com.jccworld.androiddaggertestbed;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.widget.TextView;
 
 import com.jccworld.androiddaggertestbed.di.injector.Injector;
@@ -31,8 +32,8 @@ public class MainActivity extends Activity {
         this.injector = new ProductionInjector();
     }
 
-    //only for test
-    public void inject(final Injector injector) {
+    @VisibleForTesting
+    public MainActivity(final Injector injector) {
         this.injector = injector;
     }
 

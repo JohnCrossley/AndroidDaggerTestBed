@@ -2,6 +2,7 @@ package com.jccworld.androiddaggertestbed;
 
 import android.widget.TextView;
 
+import com.jccworld.androiddaggertestbed.di.injector.Injector;
 import com.jccworld.androiddaggertestbed.di.injector.ProductionInjector;
 import com.jccworld.androiddaggertestbed.di.injector.TestInjector;
 import com.jccworld.androiddaggertestbed.di.module.DIModule;
@@ -25,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = RobolectricTestSettings.SDK_VERSION, manifest = RobolectricTestSettings.MANIFEST_PATH)
 public class DaggerTestActivityTest {
-    private static final String MESSAGE = "debug message";
+    private static final String DEBUG_MESSAGE = "debug message";
     private static final String PRODUCTION_MESSAGE = "production message";
 
     private ActivityController<MainActivity> sutController;
@@ -40,13 +41,15 @@ public class DaggerTestActivityTest {
     public void setUp() {
         fakeApplicationScopeFake = new ApplicationScopeFake();
         fakeActivityScopeFake = new ActivityScopeFake();
-        fakeFoo = new Foo(MESSAGE);
+        fakeFoo = new Foo(DEBUG_MESSAGE);
+    }
 
-        sutController = Robolectric.buildActivity(MainActivity.class);
+    private void createActivity(final Injector injector) {
+        sutController = ActivityController.of(Robolectric.getShadowsAdapter(), new MainActivity(injector));
         sut = sutController.get();
     }
 
-    private void createStartResume() {
+    private void activityCallOnCreateOnStartOnResume() {
         sutController.create();
         sutController.start();
         sutController.resume();
@@ -58,16 +61,16 @@ public class DaggerTestActivityTest {
     @Test
     public void outputTextViewDisplaysDefaultText() {
         // init
-        sut.inject(new TestInjector(new TestModule()));
+        createActivity(new TestInjector(new TestModule()));
 
         // run
-        createStartResume();
+        activityCallOnCreateOnStartOnResume();
 
         // post-run init
         TextView outputTextView = (TextView) sut.findViewById(R.id.output);
 
         // verify
-        assertEquals(outputTextView.getText(), MESSAGE);
+        assertEquals(DEBUG_MESSAGE, outputTextView.getText());
     }
 
     /**
@@ -76,16 +79,16 @@ public class DaggerTestActivityTest {
     @Test
     public void outputTextViewDisplaysCorrectProductionText() {
         // init
-        sut.inject(new ProductionInjector());
+        createActivity(new ProductionInjector());
 
         // run
-        createStartResume();
+        activityCallOnCreateOnStartOnResume();
 
         // post-run init
         TextView outputTextView = (TextView) sut.findViewById(R.id.output);
 
         // verify
-        assertEquals(outputTextView.getText(), PRODUCTION_MESSAGE);
+        assertEquals(PRODUCTION_MESSAGE, outputTextView.getText());
     }
 
     @Module(injects = MainActivity.class)

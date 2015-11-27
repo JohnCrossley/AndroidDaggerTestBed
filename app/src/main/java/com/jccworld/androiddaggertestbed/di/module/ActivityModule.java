@@ -19,8 +19,9 @@ import dagger.Provides;
 )
 public class ActivityModule implements DIModule {
 
-    final Application application;
-    final Activity activity;
+    private final Application application;
+    private final Activity activity;
+
     public ActivityModule(final Activity activity) {
         this.application = (Application) activity.getApplicationContext();
         this.activity = activity;
